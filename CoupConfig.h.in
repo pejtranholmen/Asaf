@@ -1,0 +1,6 @@
+#define UNIXTEST
+#define UNIXTEST2
+#define USE_NOGUI
+#define COUPSTD
+
+#cmakedefine USE_NOGUI
