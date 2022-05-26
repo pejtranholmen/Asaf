@@ -10,7 +10,8 @@
 #include <exception>
 
 #include <cstdio>
-#include <unistd.h>
+#include <direct.h>
+//#include <unistd.h>
 #include <stdio.h>
 #include <wchar.h>
 #define _countof(array) (sizeof(array) / sizeof(array[0]))
@@ -24,7 +25,7 @@
 //#include <direct.h>
 
 #include "src/CoupModel/NewBase/SimArchive.h"
-//#include "CoupModel/PlotPF/PlotPF/PFCurve.h"
+#include "src/CoupModel/SoilData/PlotPF/PFCurve.h"
 #include "src/CoupModel/Model/FunctionProperties.h"
 #include "src/CoupModel/Util/Register.h"
 
@@ -61,7 +62,7 @@ void SimProc(size_t i, Doc *pDoc, bool Multi)
 {
     if (Multi) {
         pDoc->CheckAndUpdateFileName(true);
-        pDoc->MakeMultiRun(75);
+        pDoc->MakeMultiRun();
     }
     else {
         pDoc->CheckAndUpdateFileName(false);
@@ -221,7 +222,7 @@ void readJson(string jsonFileName, Doc *pDoc) {
 
             if (j["params"][x]["type"] == "TABLE") {
                 
-                Tab* pTabi = dynamic_cast<Tab*>(pDoc->GetPtr(TABLE,j["params"][x]["name"], j["params"][x]["group"]));
+                Tab* pTabi = dynamic_cast<Tab*>(pDoc->GetPtr(TABLE,j["params"][x]["name"]));
                 if (pTabi != NULL) {
                     
                     cout << pTabi->GetTitle(j["params"][x]["var_index"]) << endl;
@@ -232,7 +233,7 @@ void readJson(string jsonFileName, Doc *pDoc) {
                 }
             } else if (j["params"][x]["type"] == "PAR_SINGLE") {
                 
-                Ps* pP = (Ps*)pDoc->GetPtr(PAR_SINGLE, j["params"][x]["name"], j["params"][x]["group"]);
+                Ps* pP = (Ps*)pDoc->GetPsPointer(j["params"][x]["name"]);
                 if (pP != NULL) {
                     cout << pP->GetValue() << endl;
                     pP->SetValue(j["params"][x]["value"]);
@@ -344,7 +345,7 @@ int main(int argc, const char * argv[]) {
             pDoc->CreateNewDocFromCurrentDoc();
             
             // Save the model in a new name for future runs
-            pDoc->CreateNewDocFromCurrentDoc(simFilePath);
+            //pDoc->CreateNewDocFromCurrentDoc(simFilePath); Not supported 2020 -pej
         }
         
         readJson("/tmp/CoupModel/par.json", pDoc);
