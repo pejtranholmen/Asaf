@@ -23,11 +23,11 @@ list(APPEND EXTRA_INCLUDE_DIRS
 )
 
 
-add_subdirectory(src/coupmodel/PG)
-add_subdirectory(src/coupmodel/modeltypes)
-add_subdirectory(src/coupmodel/NewBase)
-add_subdirectory(src/coupmodel/Model)
-add_subdirectory(src/coupmodel/Util)
+#add_subdirectory(src/CoupModel/PG)
+#add_subdirectory(src/coupmodel/modeltypes)
+#add_subdirectory(src/coupmodel/NewBase)
+#add_subdirectory(src/coupmodel/Model)
+#add_subdirectory(src/coupmodel/Util)
 #add_subdirectory(src/coupmodel/Simulator)
 
 
@@ -37,10 +37,10 @@ set(BUILD_SHARED_LIBS ON CACHE STRING "Link to shared libraries by default.")
 
 
 #find_package(restclient-cpp CONFIG REQUIRED)
-find_package(pugixml CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
-find_package(libpqxx CONFIG REQUIRED)
-find_package(xlnt CONFIG REQUIRED)
+#find_package(pugixml CONFIG REQUIRED)
+#find_package(nlohmann_json CONFIG REQUIRED)
+#find_package(libpqxx CONFIG REQUIRED)
+#find_package(xlnt CONFIG REQUIRED)
 
 
 add_executable(${PROJECT_NAME} 
@@ -431,20 +431,20 @@ add_executable(${PROJECT_NAME}
         src/CoupModel/mcmc/statistics.cpp
         src/CoupModel/mcmc/statistics.h
         src/CoupModel/mcmc/util.cpp
-        src/CoupModel/mcmc/util.h
+        src/CoupModel/mcmc/util.h)
 
 
- "src/CoupModel/Util/MultiStorage_DB_Link.hpp" "src/CoupModel/Util/DB_Doc.hpp" "pch.h") #add app's main sourcefile
+ #"src/CoupModel/Util/MultiStorage_DB_Link.hpp" "src/CoupModel/Util/DB_Doc.hpp" "pch.h") #add app's main sourcefile
 
 
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 
 target_link_libraries(${PROJECT_NAME}  
-	PRIVATE pugixml::shared
-	PRIVATE xlnt::xlnt
-	PRIVATE	nlohmann_json::nlohmann_json
-    PRIVATE libpqxx::pqxx
+#	PRIVATE pugixml::shared
+#	PRIVATE xlnt::xlnt
+#	PRIVATE	nlohmann_json::nlohmann_json
+#    PRIVATE libpqxx::pqxx
 )
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES DESTINATION include)

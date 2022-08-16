@@ -10,7 +10,7 @@
 #include "../Simulator/ModelInfo.h"
 #include "../NewBase/ModelMap.h"
 #include "../Util/StatUtil.h"
-
+#include "./Units.h"
 using namespace StatUtil;
 using namespace ModelFunctions;
 
@@ -132,7 +132,7 @@ public:
 
 
 	bool NumTest(const double &T) {
-		if (T > -1.E10&&T < 1.E20) return true;
+		if (T > -1.E20&&T < 1.E20) return true;
 		else {
 			Error();
 			return false;

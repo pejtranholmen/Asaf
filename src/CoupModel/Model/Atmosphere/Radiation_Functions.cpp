@@ -129,7 +129,7 @@ bool Radiation_Functions::Def()
 	pPs = new Ps(&Solar_Time_Adjust, SINGLE, RADIATION, GEOMETRIC, NOBPROC, NORMAL);  ps_vec.push_back(pPs);
 
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
-	Define(pPs, "Solar Time Adjust", 0., "minutes", "RadiationInput > 0", -120., 120., -600., 600.);
+	Define(pPs, "Solar Time Adjust", 0., "minutes", "RadiationInput > 0", -600., 600., -240., 240.);
 	functorprop.PhysFuncName = FUNC_CHOICE::POTRISHOUR; functorprop.Arg = MyArgType::D2;
 	functorprop.FuncName = MyFunc::NO_PARFUNC;
 	funcname = "Potential Global Radiation Within Day Function"; functorprop.FunctorInitOption = string::npos;
@@ -171,7 +171,7 @@ bool Radiation_Functions::Def()
 
 
 	functorprop.FuncName = MyFunc::BEER_LAW_SINGLE_LEAF; functorprop.Arg = MyArgType::D1;
-	funcname = "Beer - Lambert Law"; functorprop.FunctorInitOption = string::npos;
+	funcname = "Beer's Law"; functorprop.FunctorInitOption = string::npos;
 	plotpar.Num_Of_Curves = 1;
 	plotpar.Num_Of_Points = 100;
 	plotpar.Num_Of_X = 1;
@@ -204,7 +204,7 @@ bool Radiation_Functions::Def()
 
 	pFunc = new Func(ATMBOUNDARY, RADIATION, NOFPROC, NOBPROC, NORMAL);  
 	functorprop.FuncName = MyFunc::BEER_LAW_PERLEAF; functorprop.Arg = MyArgType::D1;
-	funcname = "Beer - Lambert Law multi canopy"; functorprop.FunctorInitOption = string::npos;
+	funcname = "Beer's Law multi canopy"; functorprop.FunctorInitOption = string::npos;
 	
 
 	Define(pFunc, functorprop, funcname,  p_vec, plotpar);  ps_vec.clear();
@@ -443,21 +443,20 @@ bool Radiation_Functions::Def()
 		Define(pPs,"KonzelmannCoef_3",0.963,"-","LongWaveBalance > 0|InLongRad=0", 0.9, 0.99); ps_vec.push_back(pPs);
 	
 	functorprop.FuncName = MyFunc::RADLONGIN_KONZELMANN_EMISSIVITY; functorprop.Arg = MyArgType::D3;
-	funcname = "Emissivity Long Wave Radiation  - Konzelmann - vapour"; functorprop.FunctorInitOption = string::npos;
+	funcname = "Emissivity Long Wave Radiation (Konzelmann)"; functorprop.FunctorInitOption = string::npos;
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
 	functorprop.Set_PlotPar = false;
 	plotpar.Y_Label = "Emissivity atmosphere (-)";
 	plotpar.Y_ScalingCoef = 0;
 	Define(pFunc, functorprop, funcname,  ps_vec, plotpar);
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
-	funcname = "Emissivity Long Wave Radiation  - Konzelmann)";
 	functorprop.Set_PlotPar = true; functorprop.Arg = MyArgType::D2;
 	Define(pFunc, functorprop, funcname, ps_vec, plotpar);
 
 
 	functorprop.FuncName = MyFunc::RADLONGIN_KONZELMANN; functorprop.Arg = MyArgType::D3;
 
-	funcname = "Incoming Long Wave Radiation - Konzelmann - vapour"; functorprop.FunctorInitOption = string::npos;
+	funcname = "Incoming Long Wave Radiation (Konzelmann)"; functorprop.FunctorInitOption = string::npos;
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
 	functorprop.Set_PlotPar = false;
 	plotpar.Y_Label = "Incomining Longwave Radiation (J/m2/day)";
@@ -465,7 +464,6 @@ bool Radiation_Functions::Def()
 
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
 	functorprop.Set_PlotPar = true; functorprop.Arg = MyArgType::D2;
-	funcname = "Incoming Long Wave Radiation - Konzelmann";
 	Define(pFunc, functorprop, funcname, ps_vec, plotpar);	 ps_vec.clear();
 
 
@@ -493,7 +491,7 @@ bool Radiation_Functions::Def()
 		Define(pPs,"SatterlundCoef_2",.3,"-","RadiationInput  > 0|InLongRad=1", 0.1, 0.7);
 		
 	functorprop.FuncName = MyFunc::RADLONGIN_SATTERLUND_EMISSIVITY; functorprop.Arg = MyArgType::D3;
-	funcname = "Emissivity Long Wave Radiation Satterlund "; functorprop.FunctorInitOption = string::npos;
+	funcname = "Emissivity Long Wave Radiation (Satterlund)"; functorprop.FunctorInitOption = string::npos;
 	pFunc = new Func(SINGLE, RADIATION, NOFPROC, NOBPROC, NORMAL);
 	Define(pFunc, functorprop, funcname, ps_vec);
 	functorprop.FuncName = MyFunc::RADLONGIN_SATTERLUND; functorprop.Arg = MyArgType::D3;
@@ -527,7 +525,7 @@ bool Radiation_Functions::Def()
 
 	Tab *pTab;
 	pTab= new Tab(&mTab_Beer,  PLANT,RADIATION, ADSORPTION,NOBPROC, NORMAL);
-		Define(pTab, "Beer - Lambert law - multiple plants","RntLAIv","Evaporation > 0|PlantType>=3");
+		Define(pTab, "Beers law - multiple plants","RntLAIv","Evaporation > 0|PlantType>=3");
 
 
 	G* pG;
@@ -543,20 +541,20 @@ bool Radiation_Functions::Def()
 	Gs *pGs;
 	pGs= new Gs(&RadNetGround, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
 
-    Define(pGs,  "RadNetGround",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0");
+    Define(pGs,  "RadNetGround",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0");
 	pGs= new Gs(&RadNetShort, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetShort",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0");
+    Define(pGs,  "RadNetShort",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0");
 	pGs= new Gs(&AlbedoVar, SINGLE,RADIATION, REFLECTION,NOBPROC, NORMAL);
     Define(pGs,  "AlbedoVar",0.,"%","RadiationInput > 0");
 	pGs= new Gs(&CanopyFracRad, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
     Define(pGs,  "CanopyFracRad",0.,"-","RadiationInput > 0");
 	pGs= new Gs(&RadInLongGround, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInLongGround",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1");
+    Define(pGs,  "RadInLongGround",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1");
 //    ! AUXILIARY VARIABLES FOR PARTITIONING OF RADIATION AT GROUND SURFACE ON IRRIGATED AND NON-IRRIGATED
 	pGs= new Gs(&RadNetGround1, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetGround1",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0|SoilPartitioningArea>1");
+    Define(pGs,  "RadNetGround1",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0|SoilPartitioningArea>1");
 	pGs= new Gs(&RadNetGround2, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetGround2",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0|SoilPartitioningArea>1");
+    Define(pGs,  "RadNetGround2",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|PlantType >= 2|Evaporation > 0|SoilPartitioningArea>1");
 
 	pGs= new Gs(&CanopyFracRad1, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
     Define(pGs,  "CanopyFracRad1",0.,"-","RadiationInput > 0|SoilPartitioningArea>1");
@@ -564,9 +562,9 @@ bool Radiation_Functions::Def()
     Define(pGs,  "CanopyFracRad2",0.,"-","RadiationInput > 0|SoilPartitioningArea>1");
 
 	pGs= new Gs(&RadInLongGround1, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInLongGround1",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1|SoilPartitioningArea>1");
+    Define(pGs,  "RadInLongGround1",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1|SoilPartitioningArea>1");
 	pGs= new Gs(&RadInLongGround2, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInLongGround2",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1|SoilPartitioningArea>1");
+    Define(pGs,  "RadInLongGround2",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|LongRadCanopy = 1|SoilPartitioningArea>1");
     
 //    ! AUXILIARY NEEDED FOR CALCULATIONS
 	pGs= new Gs(&CanopyFracRadDirect, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
@@ -576,34 +574,34 @@ bool Radiation_Functions::Def()
 	pGs= new Gs(&CanopyFracRadLong, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
     Define(pGs,  "CanopyFracRadLong",0.,"-","RadiationInput > 0|PlantType > 2|CanopyShade>0|LongRadCanopy = 1");
 	pGs= new Gs(&RadInDirect, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInDirect",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SplitGlobal>0|LongRadCanopy = 1");
+    Define(pGs,  "RadInDirect",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SplitGlobal>0|LongRadCanopy = 1");
 	pGs= new Gs(&RadInDiffuse, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInDiffuse",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SplitGlobal>0|LongRadCanopy = 1");
+    Define(pGs,  "RadInDiffuse",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SplitGlobal>0|LongRadCanopy = 1");
 
 //    ! AUXILIARY NEEDED FOR SNOWMIP2I
 	pGs= new Gs(&RadNetCanopy, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetCanopy",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 0|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadNetCanopy",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 0|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadNetLongCanopy, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetLongCanopy",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadNetLongCanopy",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadNetLongGround, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetLongGround",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadNetLongGround",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadLongOutVar, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadLongOut",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SoilEvap > 0|Evaporation > 0");
+    Define(pGs,  "RadLongOut",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SoilEvap > 0|Evaporation > 0");
 	pGs= new Gs(&RadNetShortCanopy, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetShortCanopy",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadNetShortCanopy",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadInShortGround, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadInShortGround",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadInShortGround",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadNetShortGround, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadNetShortGround",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
+    Define(pGs,  "RadNetShortGround",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|PlantType > 2|SoilEvap > 0|Evaporation > 0|CanopyShade>0");
 	pGs= new Gs(&RadShortOut, SINGLE,RADIATION, EBAL_PARTITIONING,NOBPROC, NORMAL);
-    Define(pGs,  "RadShortOut",0.,UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SoilEvap > 0|Evaporation > 0");
+    Define(pGs,  "RadShortOut",0., UNIT_TYPES::HEATFLOW_UNIT,"RadiationInput > 0|SoilEvap > 0|Evaporation > 0");
 
 	pGs= new Gs(&SnowAlbedoVar, SINGLE,RADIATION, REFLECTION,NOBPROC, NORMAL);
-    Define(pGs,  "Snow Albedo",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
+    Define(pGs,  "Snow Albedo",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
 	pGs= new Gs(&SoilAlbedoVar, SINGLE,RADIATION, REFLECTION,NOBPROC, NORMAL);
-    Define(pGs,  "Soil Albedo",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
+    Define(pGs,  "Soil Albedo",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
 	pGs= new Gs(&GroundAlbedoVar, SINGLE,RADIATION, REFLECTION,NOBPROC, NORMAL);
-    Define(pGs,  "Ground Albedo",0.,UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
+    Define(pGs,  "Ground Albedo",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilEvap > 0|Evaporation > 0|SnowPack >0");
 
 
 	return FunctionDef();

@@ -23,12 +23,12 @@ public:
 		} 
 		else return "";
 	};
-	static UNIT_TYPES GetUnitType(string key) {
+	UNIT_TYPES GetUnitType(string key) {
 		auto it = m_StringBasedUnits.find(key);
 		if (it != m_StringBasedUnits.end())
 			return (*it).second;
 		else
-			returnUNIT_TYPES::NO_UNIT;
+			return UNIT_TYPES::NO_UNIT;
 	};
 	vector<string> GetAllStringBasedUnits() {
 		vector<string> out;
@@ -51,7 +51,8 @@ private:
 		m_StringBasedUnits.insert(pair<string, UNIT_TYPES>(str,type));
 	};
 
-
+	map<enum UNIT_TYPES, string> m_TypeBasedUnits;
+	map<string, enum UNIT_TYPES> m_StringBasedUnits;
 };
 
 

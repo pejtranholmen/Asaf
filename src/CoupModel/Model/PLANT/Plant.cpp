@@ -105,7 +105,7 @@ bool Plant::Def()
 
 
 	pPs = new Ps(&TSumStart, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
-	Define(pPs, "TempSumStart", 50., UNIT_TYPES::TEMPSUM_UNIT, "PlantType > 0|PlantDevelopment = 1|WaterEq = 1", 10., 400., 20., 100.);
+	Define(pPs, "TempSumStart", 50., "Cdays", "PlantType > 0|PlantDevelopment = 1|WaterEq = 1", 10., 400., 20., 100.);
 	pPs = new Ps(&TSumCrit, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
 	Define(pPs, "TempSumCrit", 5., UNIT_TYPES::TEMP_UNIT, "PlantType > 0|PlantDevelopment = 1|WaterEq = 1", 0., 10., 3., 7.);
 	pPs = new Ps(&AlbedoLeaf, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
@@ -593,24 +593,24 @@ bool Plant::Def()
 		"PlantType > 2|RootInput =0");
 
 	pP = new P(&RL_StartValue, pNumPlants, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
-	Define(pP, pNumPlants, "rlStart Value", initv, UNIT_TYPES:: INVERSE_AREA_UNIT, "PlantType >=2|RootInput =0", -20., -0.01);
+	Define(pP, pNumPlants, "rlStart Value", initv, "m/" + p_ModelInfo->GetUnitString(UNIT_TYPES::AREA_UNIT), "PlantType >=2|RootInput =0", -20., -0.01);
 	mTab_RootLength.push_back(pP);
 	p_vec.push_back(pP);
 
 	pP = new P(&RL_OptValue, pNumPlants, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
 	initv.assign(NumPlants, 10000.);
-	Define(pP, pNumPlants, "rlOptimum Value", initv, UNIT_TYPES::INVERSE_AREA_UNIT, "PlantType >= 3|RootInput =0", -20., -0.01);
+	Define(pP, pNumPlants, "rlOptimum Value", initv, "m/" + p_ModelInfo->GetUnitString(UNIT_TYPES::AREA_UNIT), "PlantType >= 3|RootInput =0", -20., -0.01);
 	mTab_RootLength.push_back(pP);
 	p_vec.push_back(pP);
 	pP = new P(&RL_EndValue, pNumPlants, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
 	initv.assign(NumPlants, 0.);
-	Define(pP, pNumPlants, "rlEnd Value", initv, UNIT_TYPES::INVERSE_AREA_UNIT, "PlantType >= 3|RootInput =0", -20., -0.01);
+	Define(pP, pNumPlants, "rlEnd Value", initv, "m/" + p_ModelInfo->GetUnitString(UNIT_TYPES::AREA_UNIT), "PlantType >= 3|RootInput =0", -20., -0.01);
 	mTab_RootLength.push_back(pP);
 	p_vec.push_back(pP);
 	functorprop.FuncName = MyFunc::ROOTLENGTH_SEASON; functorprop.Arg = MyArgType::T_D1;
 	functorprop.FunctorInitOption = string::npos;
 	funcname = "Root Length - with season";
-	plotpar.Y_Label = "Length ";	  plotpar.Y_Label += +"()";
+	plotpar.Y_Label = "Length (m/";	  plotpar.Y_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::AREA_UNIT)+")";
 	pFunc = new Func(PLANT, PLANT_SHAPE, EVAPOTRANSPIRATION, PHOTOSYNTHESIS, NORMAL);
 	Define(pFunc, functorprop, funcname, p_vec);
 
@@ -625,7 +625,7 @@ bool Plant::Def()
 
 	pP = new P(&MaxPlantCover, pNumPlants, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
 	initv.assign(NumPlants, 1.);
-	Define(pP, pNumPlants, "Max Cover", initv, UNIT_TYPES::NO_UNIT, "PlantType >=3", 0., 10., 0., 1.); p_vec.push_back(pP);
+	Define(pP, pNumPlants, "Max Cover", initv, "-", "PlantType >=3", 0., 10., 0., 1.); p_vec.push_back(pP);
 	mTab_CanCover.push_back(pP);
 	pP = new P(&KExpPlantCover, pNumPlants, PLANT, WATER, FYS_SHAPE, NOBPROC, NORMAL);
 	initv.assign(NumPlants, .5);

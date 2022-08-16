@@ -100,8 +100,8 @@ class Radiation_Functions : public Meteorological_Data
 
 // Phys Functions
 
-  function<double(double)> f_daylength, f_potrisday, f_radlongout ;
-  function<double(double, double)> f_radlongout_e, f_potrishour, f_ThetaAngleHour;
+  function<double(double)> f_daylength, f_potrisday, f_radlongout, f_ThetaAngleHour;
+  function<double(double, double)> f_radlongout_e, f_potrishour;
   function<double(double, double, double)> f_atmcorrection;
 // Local Functions
 

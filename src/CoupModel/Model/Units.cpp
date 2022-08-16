@@ -20,11 +20,19 @@
 	unit = "MJ/m"; unit += char(178); unit += "/day";
 	SetUnitMap(MEGA_HEATFLOW_UNIT, unit);
 
-	
+	unit = "1/";
+	unit += char(176); unit += 'C';
+	SetUnitMap(INVERSE_TEMP_UNIT, unit);
+
 	unit=char(176);unit+='C';
 	SetUnitMap(TEMP_UNIT, unit);
+
+
 	unit += "day";
 	SetUnitMap(TEMPSUM_UNIT, unit);
+
+	unit = "day";
+	SetUnitMap(DAYOFYEAR_UNIT, unit);
 
 	unit = "W/m/";	unit += char(176); unit += 'C';
 	SetUnitMap(THERMAL_CONDUCTIVY_UNIT, unit);

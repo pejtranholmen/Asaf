@@ -70,8 +70,8 @@ bool SoilEvaporation_Functions::Def()
 	functorprop.FuncName = MyFunc::REL_HUMIDITY_GAS_EQUILIBRIUM; functorprop.Arg = MyArgType::D3;
 	funcname = "Gas Liquid Phase Function";
 
-	plotpar.X_Label = "Pressure Head ";	 plotpar.X_Label += p_ModelInfo->GetUnitString(PRESSUREHEAD_UNIT, true);
-	plotpar.Y_Label = "Relative Humidity ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(NO_UNIT, true);
+	plotpar.X_Label = "Pressure Head ";	 plotpar.X_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::PRESSUREHEAD_UNIT, true);
+	plotpar.Y_Label = "Relative Humidity ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::NO_UNIT, true);
 
 	pPs = new Ps(&EGPsi, ATMBOUNDARY, VAPOUR, EBAL_PARTITIONING, NOBPROC, NORMAL); ps_vec.push_back(pPs);
 	Define(pPs, "EquilAdjustPsi", 1., "-", "Evaporation > 0|Evaporation Method = 3|WaterEq = 1", 0., 5., 0., 2.5);
@@ -87,7 +87,7 @@ bool SoilEvaporation_Functions::Def()
 	plotpar.X2_Vec = { -2.f, -1.f, 0.f,1.f };
 	plotpar.Num_Of_X = 2;
 	plotpar.LegendsVec = { "2 mm deficit", "1 mm deficit", "equilibrium","1 mm surplus" };
-	plotpar.Y_Label = "Surface Resistance ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(AERODYNAMIC_RESISTANCE_UNIT, true);
+	plotpar.Y_Label = "Surface Resistance ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::AERODYNAMIC_RESISTANCE_UNIT, true);
 	pPs = new Ps(&PsiRs_1p, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL); ps_vec.push_back(pPs);
 	Define(pPs, "PsiRs_1p", 200., "", "Evaporation > 1|Evaporation Method = 1|WaterEq = 1", 0., 1.E4, 50., 500.);
 
@@ -99,10 +99,10 @@ bool SoilEvaporation_Functions::Def()
 	funcname = "Soil Surface Resistance 3 par Function";
 	plotpar.LogYScale = true;
 	pPs = new Ps(&PsiRs_3pf1, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL); ps_vec.push_back(pPs); 
-	string unit = "1 /"; unit +=p_ModelInfo->GetUnitString(PRESSUREHEAD_UNIT);
+	string unit = "1 /"; unit +=p_ModelInfo->GetUnitString(UNIT_TYPES::PRESSUREHEAD_UNIT);
 	Define(pPs, "PsiRs_3pf1", 1.,unit, "Evaporation > 1|Evaporation Method = 2|WaterEq = 1", 0.01, 5., 0.1, 5.);//!LK changed to max 20 instead of 5.
 	pPs = new Ps(&PsiRs_3pf2, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL); ps_vec.push_back(pPs); 
-	Define(pPs, "PsiRs_3pf2", 300., PRESSUREHEAD_UNIT, "Evaporation > 1|Evaporation Method = 2|WaterEq = 1", 1., 1000.);
+	Define(pPs, "PsiRs_3pf2", 300., UNIT_TYPES::PRESSUREHEAD_UNIT, "Evaporation > 1|Evaporation Method = 2|WaterEq = 1", 1., 1000.);
 	pPs = new Ps(&PsiRs_3pf3, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL); ps_vec.push_back(pPs); 
 	Define(pPs, "PsiRs_3pf3", 100., "1/mm", "Evaporation > 1|Evaporation Method = 2|WaterEq = 1", 10., 1000.);
 
@@ -111,7 +111,7 @@ bool SoilEvaporation_Functions::Def()
 
 
 	pPs = new Ps(&MaxSoilCondens, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL);
-	Define(pPs, "MaxSoilCondens", 2., WATERFLOW_UNIT, "Evaporation > 1|Evaporation Method > 0|WaterEq = 1", 0., 1000., 1., 4.);
+	Define(pPs, "MaxSoilCondens", 2., UNIT_TYPES::WATERFLOW_UNIT, "Evaporation > 1|Evaporation Method > 0|WaterEq = 1", 0., 1000., 1., 4.);
 	pPs = new Ps(&MaxSurfDeficit, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL);
 	Define(pPs, "MaxSurfDeficit", -2., "mm", "Evaporation > 1|Evaporation Method > 0|Evaporation Method < 4|WaterEq = 1", -4., 0., -3., -1.);
 	pPs = new Ps(&MaxSurfExcess, ATMBOUNDARY, VAPOUR, SOILEVAPORATION, NOBPROC, NORMAL);
@@ -129,8 +129,8 @@ bool SoilEvaporation_Functions::Def()
 	plotpar.X_Max = 6;
 	plotpar.LogXScale = false;
 	plotpar.LogYScale = false;
-	plotpar.X_Label = "Leaf Area Index ";	 plotpar.X_Label += p_ModelInfo->GetUnitString(NO_UNIT, true);
-	plotpar.Y_Label = "Resistance ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(AERODYNAMIC_RESISTANCE_UNIT, true);
+	plotpar.X_Label = "Leaf Area Index ";	 plotpar.X_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::NO_UNIT, true);
+	plotpar.Y_Label = "Resistance ";	 plotpar.Y_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::AERODYNAMIC_RESISTANCE_UNIT, true);
 	plotpar.LegendsVec = { "" };
 
 	pPs = new Ps(&RaLAI, ATMBOUNDARY, VAPOUR, TURBULENCE, NOBPROC, NORMAL); ps_vec.push_back(pPs); 
@@ -153,8 +153,8 @@ bool SoilEvaporation_Functions::Def()
 	plotpar.X_Min = 0;
 	plotpar.X_Max = 15.;
 	plotpar.LogYScale = true;
-	plotpar.Y_Label = "Resistance ";  plotpar.Y_Label += p_ModelInfo->GetUnitString(AERODYNAMIC_RESISTANCE_UNIT, true);
-	plotpar.X_Label = "Wind Speed "; plotpar.X_Label += p_ModelInfo->GetUnitString(WIND_SPEED_UNIT, true);
+	plotpar.Y_Label = "Resistance ";  plotpar.Y_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::AERODYNAMIC_RESISTANCE_UNIT, true);
+	plotpar.X_Label = "Wind Speed "; plotpar.X_Label += p_ModelInfo->GetUnitString(UNIT_TYPES::WIND_SPEED_UNIT, true);
 	plotpar.X2_Vec = { 2.f, 10.f };
 	plotpar.LegendsVec = { "Height 2 m","Height 10 m" };
 
@@ -255,7 +255,7 @@ bool SoilEvaporation_Functions::Def()
     //!======================	
  	Ts *pTs= new Ts(&SoilEvaporationFlux, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
  
-    Define(pTs,  "SoilEvaporation",0., WATERFLOW_UNIT,"Evaporation Method > 0|Evaporation > 1|WaterEq = 1");
+    Define(pTs,  "SoilEvaporation",0., UNIT_TYPES::WATERFLOW_UNIT,"Evaporation Method > 0|Evaporation > 1|WaterEq = 1");
     //!======================	
     //! AUXILIARY VARIABLES     
     //!======================
@@ -266,51 +266,51 @@ bool SoilEvaporation_Functions::Def()
 	pGs= new Gs(&RsSoilSurf, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
 	    Define(pGs,  "ResSoilSurface", 0.,"s/m", "Evaporation > 1||Evaporation Method > 0|Surface Temperature <2|WaterEq = 1") ;
 	pGs= new Gs(&EAvailSurf, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "EAvailableSurf", 0.,HEATFLOW_UNIT,"Evaporation > 0|Surface Temperature > 0|Surface Temperatue <2|WaterEq = 1");
+	    Define(pGs,  "EAvailableSurf", 0., UNIT_TYPES::HEATFLOW_UNIT,"Evaporation > 0|Surface Temperature > 0|Surface Temperatue <2|WaterEq = 1");
 	pGs= new Gs(&SoilLatentF, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "SoilLatentFlow", 0.,HEATFLOW_UNIT, "Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+	    Define(pGs,  "SoilLatentFlow", 0., UNIT_TYPES::HEATFLOW_UNIT, "Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&SoilSensF, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "SoilSensibelFlow", 0.,HEATFLOW_UNIT,"Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+	    Define(pGs,  "SoilSensibelFlow", 0., UNIT_TYPES::HEATFLOW_UNIT,"Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&RadNetBareSoil, ATMBOUNDARY,RADIATION, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "RadNetBareSoil", 0.,HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
+	    Define(pGs,  "RadNetBareSoil", 0., UNIT_TYPES::HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
 
     //! DG 080902
 	pGs= new Gs(&RadNetShortBareSoil, ATMBOUNDARY,RADIATION, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "RadNetShortBareSoil", 0.,HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
+	    Define(pGs,  "RadNetShortBareSoil", 0., UNIT_TYPES::HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
 	pGs= new Gs(&RadNetLongBareSoil, ATMBOUNDARY,RADIATION, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "RadNetLongBareSoil", 0.,HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
+	    Define(pGs,  "RadNetLongBareSoil", 0., UNIT_TYPES::HEATFLOW_UNIT,"Evaporation > 1|Surface Temperature > 1");
     //! END DG 080902
 
 	pGs= new Gs(&SoilEbal, ATMBOUNDARY,HEAT, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "EBalanceClosure", 0.,HEATFLOW_UNIT, "Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+	    Define(pGs,  "EBalanceClosure", 0., UNIT_TYPES::HEATFLOW_UNIT, "Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&VapourPSurf, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
 	    Define(pGs,  "VapourPSurf", 0.,"Pa", "Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&PotEvapGround, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,   "PotEvapGround", 0.,WATERFLOW_UNIT, "Evaporation > 1|Evaporation Method > 0|WaterEq = 1");
+	    Define(pGs,   "PotEvapGround", 0., UNIT_TYPES::WATERFLOW_UNIT, "Evaporation > 1|Evaporation Method > 0|WaterEq = 1");
 	pGs= new Gs(&TempBareSoil, ATMBOUNDARY,TEMPERATURE, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "TempBareSoil"  , 10.,TEMP_UNIT,"Evaporation > 0|HeatEq >= 1");
+	    Define(pGs,  "TempBareSoil"  , 10., UNIT_TYPES::TEMP_UNIT,"Evaporation > 0|HeatEq >= 1");
 	
     //!==============================
     //! AUXILIARY VARIABLES (AREA 1)    
     //!==============================
 
 	pTs= new Ts(&SoilEvaporation1, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pTs,  "SoilEvaporation1",0.,WATERFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+	    Define(pTs,  "SoilEvaporation1",0., UNIT_TYPES::WATERFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pTs= new Ts(&SurfHeatFlow1, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-		Define(pTs,  "SurfHeatFlow1",0., HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation Method > 0|Evaporation > 1");
+		Define(pTs,  "SurfHeatFlow1",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation Method > 0|Evaporation > 1");
  	pGs= new Gs(&Fraction1, ATMBOUNDARY,ATMOSPHERE, TURBULENCE,NOBPROC, NORMAL); 
 		Define(pGs,   "Fraction of soil Area1", 0.,"-",			"SoilPartitioningArea>0|Evaporation > 0|Evaporation Method > 0|WaterEq = 1") ;
 	pGs= new Gs(&SoilLatentF1, ATMBOUNDARY,HEAT, SOILEVAPORATION,NOBPROC, NORMAL); 
-	    Define(pGs,  "SoilLatentFlow1", 0.,HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+	    Define(pGs,  "SoilLatentFlow1", 0., UNIT_TYPES::HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&SoilSensF1, ATMBOUNDARY,HEAT, SOILEVAPORATION,NOBPROC, NORMAL); 
-    Define(pGs,  "SoilSensibelFlow1", 0.,HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+    Define(pGs,  "SoilSensibelFlow1", 0., UNIT_TYPES::HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&RadNetBareSoil1, ATMBOUNDARY,RADIATION,SOILEVAPORATION ,NOBPROC, NORMAL); 
-    Define(pGs,  "RadNetBareSoil1", 0.,HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation > 1|Surface Temperature > 1");
+    Define(pGs,  "RadNetBareSoil1", 0., UNIT_TYPES::HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation > 1|Surface Temperature > 1");
 
 	pGs= new Gs(&TempBareSoil1, ATMBOUNDARY,TEMPERATURE,SOILEVAPORATION ,NOBPROC, NORMAL); 
-    Define(pGs,  "TempBareSoil1"  , 10.,TEMP_UNIT,"SoilPartitioningArea>0|Evaporation > 0|HeatEq >= 1");
+    Define(pGs,  "TempBareSoil1"  , 10., UNIT_TYPES::TEMP_UNIT,"SoilPartitioningArea>0|Evaporation > 0|HeatEq >= 1");
 	pGs= new Gs(&SoilEBal1, ATMBOUNDARY,HEAT,SOILEVAPORATION ,NOBPROC, NORMAL); 
-    Define(pGs,  "EBalanceClosure1", 0.,HEATFLOW_UNIT		, "SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+    Define(pGs,  "EBalanceClosure1", 0., UNIT_TYPES::HEATFLOW_UNIT		, "SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&SurfMos1, ATMBOUNDARY,VAPOUR,SOILEVAPORATION ,NOBPROC, NORMAL); 
     Define(pGs,   "SurfmoistureBalance1", 0.,"mm"			,"SoilPartitioningArea>0|Evaporation > 0|Evaporation Method > 0|WaterEq = 1") ;
 	pGs= new Gs(&RaSoilSurf1, ATMBOUNDARY,ATMOSPHERE, TURBULENCE,NOBPROC, NORMAL); 
@@ -320,19 +320,19 @@ bool SoilEvaporation_Functions::Def()
     //! AUXILIARY VARIABLES (AREA 2)    
     //!==============================
 	pTs= new Ts(&SoilEvaporation2, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-		Define(pTs,  "SoilEvaporation2",0.,WATERFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+		Define(pTs,  "SoilEvaporation2",0., UNIT_TYPES::WATERFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pTs= new Ts(&SurfHeatFlow2, ATMBOUNDARY,VAPOUR, SOILEVAPORATION,NOBPROC, NORMAL); 
-		Define(pTs,  "SurfHeatFlow2",0., HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation Method > 0|Evaporation > 1");
+		Define(pTs,  "SurfHeatFlow2",0., UNIT_TYPES::HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation Method > 0|Evaporation > 1");
 	pGs= new Gs(&SoilLatentF2, ATMBOUNDARY,HEAT, SOILEVAPORATION,NOBPROC, NORMAL); 
-		Define(pGs,  "SoilLatentFlow2", 0.,HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+		Define(pGs,  "SoilLatentFlow2", 0., UNIT_TYPES::HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
   	pGs= new Gs(&SoilSensF2, ATMBOUNDARY,HEAT, SOILEVAPORATION,NOBPROC, NORMAL);   
-		Define(pGs,  "SoilSensibelFlow2", 0.,HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+		Define(pGs,  "SoilSensibelFlow2", 0., UNIT_TYPES::HEATFLOW_UNIT		,"SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&RadNetBareSoil2, ATMBOUNDARY,RADIATION,SOILEVAPORATION ,NOBPROC, NORMAL);    
-		Define(pGs,  "RadNetBareSoil2", 0.,HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation > 1|Surface Temperature > 1");
+		Define(pGs,  "RadNetBareSoil2", 0., UNIT_TYPES::HEATFLOW_UNIT,"SoilPartitioningArea>0|Evaporation > 1|Surface Temperature > 1");
 	pGs= new Gs(&TempBareSoil2, ATMBOUNDARY,TEMPERATURE,SOILEVAPORATION ,NOBPROC, NORMAL); 
-		Define(pGs,  "TempBareSoil2"  , 10.,TEMP_UNIT,"SoilPartitioningArea>0|Evaporation > 0|HeatEq >= 1");
+		Define(pGs,  "TempBareSoil2"  , 10., UNIT_TYPES::TEMP_UNIT,"SoilPartitioningArea>0|Evaporation > 0|HeatEq >= 1");
 	pGs= new Gs(&SoilEBal2, ATMBOUNDARY,HEAT,SOILEVAPORATION ,NOBPROC, NORMAL);    
-		Define(pGs,  "EBalanceClosure2", 0.,HEATFLOW_UNIT		, "SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
+		Define(pGs,  "EBalanceClosure2", 0., UNIT_TYPES::HEATFLOW_UNIT		, "SoilPartitioningArea>0|Evaporation > 0|Surface Temperature > 0|WaterEq = 1");
 	pGs= new Gs(&SurfMos2, ATMBOUNDARY,VAPOUR,SOILEVAPORATION ,NOBPROC, NORMAL); 
 		Define(pGs,   "SurfmoistureBalance2", 0.,"mm"			,"SoilPartitioningArea>0|Evaporation > 0|Evaporation Method > 0|WaterEq = 1") ;
 	pGs= new Gs(&RaSoilSurf2, ATMBOUNDARY,ATMOSPHERE, TURBULENCE,NOBPROC, NORMAL); 
